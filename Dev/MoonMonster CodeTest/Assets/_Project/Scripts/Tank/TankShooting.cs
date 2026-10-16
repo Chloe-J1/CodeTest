@@ -18,10 +18,15 @@ namespace MoonMonster.Codetest
         private float _reloadCountdown;
         private bool _fired;
         private Camera _camera;
+        private Rigidbody _rigidBody;
+        private Vector3 _previousPosition;
+        private Vector3 _velocity = Vector3.zero;
         
         private void Start()
         {
             _camera = Camera.main;
+            _rigidBody = gameObject.GetComponent<Rigidbody>();
+            _previousPosition = gameObject.transform.position;
         }
 
         private void Update()
@@ -37,7 +42,14 @@ namespace MoonMonster.Codetest
                     _reloadCountdown -= Time.deltaTime;
             }
         }
-        
+
+        private void FixedUpdate()
+        {
+            Vector3 currentPosition = gameObject.transform.position;
+            _velocity = (currentPosition - _previousPosition) / Time.fixedDeltaTime;
+            _previousPosition = currentPosition;
+        }
+
         public void LookAtTarget(Transform target)
         {
             if (target == null)
@@ -53,11 +65,14 @@ namespace MoonMonster.Codetest
 
         public void Fire()
         {
-            if(_fired)
+            if(_fired || _rigidBody == null)
                 return;
-            
+
+            const float offsetMultiplier = 0.05f;
+            float offset = _velocity.magnitude * offsetMultiplier;
+            Vector3 spawnLocation = _fireTransform.position + (offset * _fireTransform.forward);
             Rigidbody shellInstance =
-                Instantiate(_shell, _fireTransform.position, _fireTransform.rotation) as Rigidbody;
+                Instantiate(_shell, spawnLocation, _fireTransform.rotation) as Rigidbody;
 
             shellInstance.linearVelocity = _launchForce * _fireTransform.forward;
 
