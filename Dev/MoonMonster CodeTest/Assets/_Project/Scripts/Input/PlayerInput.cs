@@ -17,6 +17,7 @@ namespace MoonMonster.Codetest
         private string _selectFirstWeaponButtonName;
         private string _selectSecondWeaponButtonName;
         private string _selectThirdWeaponButtonName;
+        private string _selectNextAxisName;
         
         void Start()
         {            
@@ -26,6 +27,7 @@ namespace MoonMonster.Codetest
             _selectFirstWeaponButtonName = "SelectFirstWeapon" + PlayerNumber;
             _selectSecondWeaponButtonName = "SelectSecondWeapon" + PlayerNumber;
             _selectThirdWeaponButtonName = "SelectThirdWeapon" + PlayerNumber;
+            _selectNextAxisName = "SelectNextWeapon" + PlayerNumber;
         }
 
         void Update()
@@ -48,6 +50,15 @@ namespace MoonMonster.Codetest
             if (Input.GetButton(_selectThirdWeaponButtonName))
             {
                 _weaponHandler.SetSelectedWeapon(4);
+            }
+            float scrollValue = Input.GetAxis(_selectNextAxisName);
+            if (scrollValue > 0f)
+            {
+                _weaponHandler.SelectNextWeapon();
+            }
+            if (scrollValue < 0f)
+            {
+                _weaponHandler.SelectPreviousWeapon();
             }
         }
     }

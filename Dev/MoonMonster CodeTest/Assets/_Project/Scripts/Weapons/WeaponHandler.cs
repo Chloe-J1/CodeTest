@@ -15,7 +15,29 @@ public class WeaponHandler : MonoBehaviour
 
     public void SetSelectedWeapon(int selectedWeaponIndex)
     {
+        if (_selectedWeaponIndex > _weaponPrefabs.Count || _selectedWeaponIndex < 0) // Don't go out of bounds
+            return;
         _selectedWeaponIndex = selectedWeaponIndex;
-        _shooting.SetActiveWeaponPrefab(_weaponPrefabs[selectedWeaponIndex]);
+        _shooting.SetActiveWeaponPrefab(_weaponPrefabs[_selectedWeaponIndex]);
+    }
+    public void SelectNextWeapon()
+    {
+        ++_selectedWeaponIndex;
+        if(_selectedWeaponIndex > _weaponPrefabs.Count - 1)
+        {
+            _selectedWeaponIndex = 0; // Go back to start
+        }
+        _shooting.SetActiveWeaponPrefab(_weaponPrefabs[_selectedWeaponIndex]);
+        
+    }
+
+    public void SelectPreviousWeapon()
+    {
+        --_selectedWeaponIndex;
+        if (_selectedWeaponIndex < 0)
+        {
+            _selectedWeaponIndex = _weaponPrefabs.Count - 1; // Jump to end
+        }
+        _shooting.SetActiveWeaponPrefab(_weaponPrefabs[_selectedWeaponIndex]);
     }
 }
