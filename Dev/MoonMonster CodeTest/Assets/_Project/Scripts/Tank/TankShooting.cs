@@ -6,7 +6,7 @@ namespace MoonMonster.Codetest
     public class TankShooting : MonoBehaviour
     {
         [SerializeField] private bool _lookAtMouse;
-        [SerializeField, Required] private Rigidbody _shell;
+        [SerializeField, Required] private Rigidbody _shellRigidBody;
         [SerializeField, Required] private Transform _fireTransform;
         [SerializeField, Required] private AudioSource _shootingAudio;
         [SerializeField, Required] private AudioClip _fireClip;
@@ -19,12 +19,14 @@ namespace MoonMonster.Codetest
         private bool _fired;
         private Camera _camera;
         private Collider _collider;
+        private IShell _shell;
 
         
         private void Start()
         {
             _camera = Camera.main;
             _collider = gameObject.GetComponent<Collider>();
+            _shell = _shellRigidBody.GetComponent<IShell>();
         }
 
         private void Update()
@@ -59,13 +61,9 @@ namespace MoonMonster.Codetest
             if(_fired)
                 return;
 
-            Rigidbody shellInstance =
-                Instantiate(_shell, _fireTransform.position, _fireTransform.rotation) as Rigidbody;
-
+            Collider shellCollider = _shell.Fire(_fireTransform);
             // Ignore collision between your own shot shell & yourself
-            Physics.IgnoreCollision(shellInstance.GetComponent<Collider>(), _collider);
-
-            shellInstance.linearVelocity = _launchForce * _fireTransform.forward;
+            Physics.IgnoreCollision(shellCollider, _collider);
 
             _shootingAudio.clip = _fireClip;
             _shootingAudio.Play();
