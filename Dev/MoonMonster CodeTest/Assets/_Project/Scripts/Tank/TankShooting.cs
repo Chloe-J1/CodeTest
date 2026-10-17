@@ -18,15 +18,13 @@ namespace MoonMonster.Codetest
         private float _reloadCountdown;
         private bool _fired;
         private Camera _camera;
-        private Rigidbody _rigidBody;
-        private Vector3 _previousPosition;
-        private Vector3 _velocity = Vector3.zero;
+        private Collider _collider;
+
         
         private void Start()
         {
             _camera = Camera.main;
-            _rigidBody = gameObject.GetComponent<Rigidbody>();
-            _previousPosition = gameObject.transform.position;
+            _collider = gameObject.GetComponent<Collider>();
         }
 
         private void Update()
@@ -41,13 +39,6 @@ namespace MoonMonster.Codetest
                 else
                     _reloadCountdown -= Time.deltaTime;
             }
-        }
-
-        private void FixedUpdate()
-        {
-            Vector3 currentPosition = gameObject.transform.position;
-            _velocity = (currentPosition - _previousPosition) / Time.fixedDeltaTime;
-            _previousPosition = currentPosition;
         }
 
         public void LookAtTarget(Transform target)
@@ -65,14 +56,14 @@ namespace MoonMonster.Codetest
 
         public void Fire()
         {
-            if(_fired || _rigidBody == null)
+            if(_fired)
                 return;
 
-            const float offsetMultiplier = 0.05f;
-            float offset = _velocity.magnitude * offsetMultiplier;
-            Vector3 spawnLocation = _fireTransform.position + (offset * _fireTransform.forward);
             Rigidbody shellInstance =
-                Instantiate(_shell, spawnLocation, _fireTransform.rotation) as Rigidbody;
+                Instantiate(_shell, _fireTransform.position, _fireTransform.rotation) as Rigidbody;
+
+            // Ignore collision between your own shot shell & yourself
+            Physics.IgnoreCollision(shellInstance.GetComponent<Collider>(), _collider);
 
             shellInstance.linearVelocity = _launchForce * _fireTransform.forward;
 
