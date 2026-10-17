@@ -1,10 +1,11 @@
+using NaughtyAttributes;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class SingleShell : MonoBehaviour, IWeapon
 {
     [SerializeField] private float _launchForce = 15f;
-    [SerializeField] private Rigidbody _shell;
+    [SerializeField, Required] private Rigidbody _shell;
 
     public List<Collider> Fire(Transform spawnTransform)
     {

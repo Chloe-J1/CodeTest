@@ -7,7 +7,6 @@ namespace MoonMonster.Codetest
     public class TankShooting : MonoBehaviour
     {
         [SerializeField] private bool _lookAtMouse;
-        [SerializeField, Required] private Rigidbody _shellRigidBody;
         [SerializeField, Required] private Transform _fireTransform;
         [SerializeField, Required] private AudioSource _shootingAudio;
         [SerializeField, Required] private AudioClip _fireClip;
@@ -15,19 +14,20 @@ namespace MoonMonster.Codetest
         [SerializeField] private float _fireDelay = 0.3f;
         [SerializeField, Required] private GameObject _turret;
         [SerializeField] private float _angleOffset = 90f;
+        [SerializeField, Required] private GameObject _weaponPrefab;
 
         private float _reloadCountdown;
         private bool _fired;
         private Camera _camera;
         private Collider _collider;
-        private IWeapon _shell;
+        private IWeapon _activeWeapon;
 
         
         private void Start()
         {
             _camera = Camera.main;
             _collider = gameObject.GetComponent<Collider>();
-            _shell = _shellRigidBody.gameObject.GetComponent<IWeapon>();
+            _activeWeapon = _weaponPrefab.GetComponent<IWeapon>();
         }
 
         private void Update()
@@ -62,7 +62,7 @@ namespace MoonMonster.Codetest
             if(_fired)
                 return;
 
-            List<Collider> shellColliders = _shell.Fire(_fireTransform);
+            List<Collider> shellColliders = _activeWeapon.Fire(_fireTransform);
             // Ignore collision between your own shot shells & yourself
             foreach(var shellCollider in shellColliders)
             {
