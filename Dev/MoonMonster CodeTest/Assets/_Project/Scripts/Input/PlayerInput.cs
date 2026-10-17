@@ -49,7 +49,7 @@ namespace MoonMonster.Codetest
             }
             if (Input.GetButton(_selectThirdWeaponButtonName))
             {
-                _weaponHandler.SetSelectedWeapon(4);
+                _weaponHandler.SetSelectedWeapon(2);
             }
             float scrollValue = Input.GetAxis(_selectNextAxisName);
             if (scrollValue > 0f)
