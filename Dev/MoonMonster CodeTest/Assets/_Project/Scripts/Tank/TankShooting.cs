@@ -97,5 +97,11 @@ namespace MoonMonster.Codetest
                 _turret.transform.rotation = Quaternion.AngleAxis(angle, Vector3.down);
             }
         }
+
+        public void SetActiveWeaponPrefab(GameObject activeWeapon)
+        {
+            _weaponPrefab = activeWeapon;
+            _activeWeapon = _weaponPrefab.GetComponent<IWeapon>();
+        }
     }
 }
