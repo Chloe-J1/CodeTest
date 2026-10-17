@@ -1,4 +1,5 @@
 ﻿using NaughtyAttributes;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace MoonMonster.Codetest
@@ -19,14 +20,14 @@ namespace MoonMonster.Codetest
         private bool _fired;
         private Camera _camera;
         private Collider _collider;
-        private IShell _shell;
+        private IWeapon _shell;
 
         
         private void Start()
         {
             _camera = Camera.main;
             _collider = gameObject.GetComponent<Collider>();
-            _shell = _shellRigidBody.GetComponent<IShell>();
+            _shell = _shellRigidBody.gameObject.GetComponent<IWeapon>();
         }
 
         private void Update()
@@ -61,10 +62,17 @@ namespace MoonMonster.Codetest
             if(_fired)
                 return;
 
-            Collider shellCollider = _shell.Fire(_fireTransform);
-            // Ignore collision between your own shot shell & yourself
-            Physics.IgnoreCollision(shellCollider, _collider);
-
+            List<Collider> shellColliders = _shell.Fire(_fireTransform);
+            // Ignore collision between your own shot shells & yourself
+            foreach(var shellCollider in shellColliders)
+            {
+                Physics.IgnoreCollision(shellCollider, _collider);
+                foreach(var shellColliderB in shellColliders) // Ignore collision between your own bullets, TODO: avoid duplicate ignorecollision
+                {
+                    Physics.IgnoreCollision(shellCollider, shellColliderB);
+                }
+            }
+            
             _shootingAudio.clip = _fireClip;
             _shootingAudio.Play();
             

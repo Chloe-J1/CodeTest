@@ -1,16 +1,12 @@
-using NaughtyAttributes;
+using System.Collections.Generic;
 using UnityEngine;
 
-public class SingleShell : MonoBehaviour, IShell
+public class SingleShell : MonoBehaviour, IWeapon
 {
     [SerializeField] private float _launchForce = 15f;
-    private Rigidbody _shell;
+    [SerializeField] private Rigidbody _shell;
 
-    private void Start()
-    {
-        _shell = GetComponent<Rigidbody>();
-    }
-    public Collider Fire(Transform spawnTransform)
+    public List<Collider> Fire(Transform spawnTransform)
     {
         Rigidbody shellInstance =
                 Instantiate(_shell, spawnTransform.position, spawnTransform.rotation) as Rigidbody;
@@ -18,11 +14,8 @@ public class SingleShell : MonoBehaviour, IShell
         shellInstance.linearVelocity = _launchForce * spawnTransform.forward;
 
         Collider collider = shellInstance.GetComponent<Collider>();
-        if (collider == null)
-        {
-            Debug.LogError("ShellInstance has no collider");
-            return new Collider();
-        }
-        return collider;
+        List<Collider> colliders = new List<Collider>();
+        colliders.Add(collider);
+        return colliders;
     }
 }
