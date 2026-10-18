@@ -28,4 +28,8 @@ public class MultipleShotWeapon : MonoBehaviour, IWeapon
         
         return colliders;
     }
+
+    public void StopFire()
+    {
+    }
 }

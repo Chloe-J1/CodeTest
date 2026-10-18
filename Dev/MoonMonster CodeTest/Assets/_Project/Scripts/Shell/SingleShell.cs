@@ -19,4 +19,9 @@ public class SingleShell : MonoBehaviour, IWeapon
         colliders.Add(collider);
         return colliders;
     }
+
+    public void StopFire()
+    {
+        
+    }
 }

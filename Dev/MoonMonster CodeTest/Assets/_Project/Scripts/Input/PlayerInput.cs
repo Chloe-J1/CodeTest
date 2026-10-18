@@ -34,9 +34,13 @@ namespace MoonMonster.Codetest
         {
             _movement.SetMoveInput(Input.GetAxis (_movementAxisName),Input.GetAxis (_turnAxisName));
 
-            if (Input.GetButton(_fireButtonName))
+            if (Input.GetButtonDown(_fireButtonName))
             {
                 _shooting.Fire();
+            }
+            if(Input.GetButtonUp(_fireButtonName))
+            {
+                _shooting.StopFire();
             }
 
             if(Input.GetButton(_selectFirstWeaponButtonName))

@@ -79,6 +79,12 @@ namespace MoonMonster.Codetest
             _fired = true;
             _reloadCountdown = _fireDelay;
         }
+
+        public void StopFire()
+        {
+            if (_activeWeapon == null) return;
+            _activeWeapon.StopFire();
+        }
         
         private void LookAtMousePosition()
         {

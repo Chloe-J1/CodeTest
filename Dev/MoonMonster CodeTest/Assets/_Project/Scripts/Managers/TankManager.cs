@@ -50,6 +50,7 @@ namespace MoonMonster.Codetest
         {
             _movement.enabled = false;
             _shooting.enabled = false;
+            _shooting.StopFire();
             if (_playerInput)
                 _playerInput.enabled = false;
             if (_aiController)
