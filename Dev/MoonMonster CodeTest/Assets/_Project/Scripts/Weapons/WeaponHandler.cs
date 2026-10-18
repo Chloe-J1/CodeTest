@@ -2,42 +2,46 @@ using MoonMonster.Codetest;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class WeaponHandler : MonoBehaviour
+namespace MoonMonster.Codetest
 {
-    private int _selectedWeaponIndex = 0;
-    public List<GameObject> _weaponPrefabs = new List<GameObject>();
-    private TankShooting _shooting;
+    public class WeaponHandler : MonoBehaviour
+    {
+        private int _selectedWeaponIndex = 0;
+        public List<GameObject> _weaponPrefabs = new List<GameObject>();
+        private TankShooting _shooting;
 
-    private void Start()
-    {
-        _shooting = gameObject.GetComponent<TankShooting>();
-    }
-
-    public void SetSelectedWeapon(int selectedWeaponIndex)
-    {
-        if (_selectedWeaponIndex > _weaponPrefabs.Count || _selectedWeaponIndex < 0) // Don't go out of bounds
-            return;
-        _selectedWeaponIndex = selectedWeaponIndex;
-        _shooting.SetActiveWeaponPrefab(_weaponPrefabs[_selectedWeaponIndex]);
-    }
-    public void SelectNextWeapon()
-    {
-        ++_selectedWeaponIndex;
-        if(_selectedWeaponIndex > _weaponPrefabs.Count - 1)
+        private void Start()
         {
-            _selectedWeaponIndex = 0; // Go back to start
+            _shooting = gameObject.GetComponent<TankShooting>();
         }
-        _shooting.SetActiveWeaponPrefab(_weaponPrefabs[_selectedWeaponIndex]);
-        
-    }
 
-    public void SelectPreviousWeapon()
-    {
-        --_selectedWeaponIndex;
-        if (_selectedWeaponIndex < 0)
+        public void SetSelectedWeapon(int selectedWeaponIndex)
         {
-            _selectedWeaponIndex = _weaponPrefabs.Count - 1; // Jump to end
+            if (_selectedWeaponIndex > _weaponPrefabs.Count || _selectedWeaponIndex < 0) // Don't go out of bounds
+                return;
+            _selectedWeaponIndex = selectedWeaponIndex;
+            _shooting.SetActiveWeaponPrefab(_weaponPrefabs[_selectedWeaponIndex]);
         }
-        _shooting.SetActiveWeaponPrefab(_weaponPrefabs[_selectedWeaponIndex]);
+        public void SelectNextWeapon()
+        {
+            ++_selectedWeaponIndex;
+            if (_selectedWeaponIndex > _weaponPrefabs.Count - 1)
+            {
+                _selectedWeaponIndex = 0; // Go back to start
+            }
+            _shooting.SetActiveWeaponPrefab(_weaponPrefabs[_selectedWeaponIndex]);
+
+        }
+
+        public void SelectPreviousWeapon()
+        {
+            --_selectedWeaponIndex;
+            if (_selectedWeaponIndex < 0)
+            {
+                _selectedWeaponIndex = _weaponPrefabs.Count - 1; // Jump to end
+            }
+            _shooting.SetActiveWeaponPrefab(_weaponPrefabs[_selectedWeaponIndex]);
+        }
     }
 }
+

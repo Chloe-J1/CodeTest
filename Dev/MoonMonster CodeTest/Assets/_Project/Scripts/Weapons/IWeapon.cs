@@ -1,10 +1,11 @@
-
-
 using System.Collections.Generic;
 using UnityEngine;
 
-public interface IWeapon
+namespace MoonMonster.Codetest
 {
-    List<Collider> Fire(Transform spawnTransform);
-    void StopFire();
+    public interface IWeapon
+    {
+        List<Collider> Fire(Transform spawnTransform);
+        void StopFire();
+    }
 }

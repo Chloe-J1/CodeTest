@@ -2,26 +2,30 @@ using NaughtyAttributes;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SingleShell : MonoBehaviour, IWeapon
+namespace MoonMonster.Codetest
 {
-    [SerializeField] private float _launchForce = 15f;
-    [SerializeField, Required] private Rigidbody _shell;
-
-    public List<Collider> Fire(Transform spawnTransform)
+    public class SingleShell : MonoBehaviour, IWeapon
     {
-        Rigidbody shellInstance =
-                Instantiate(_shell, spawnTransform.position, spawnTransform.rotation) as Rigidbody;
-        
-        shellInstance.linearVelocity = _launchForce * spawnTransform.forward;
+        [SerializeField] private float _launchForce = 15f;
+        [SerializeField, Required] private Rigidbody _shell;
 
-        Collider collider = shellInstance.GetComponent<Collider>();
-        List<Collider> colliders = new List<Collider>();
-        colliders.Add(collider);
-        return colliders;
-    }
+        public List<Collider> Fire(Transform spawnTransform)
+        {
+            Rigidbody shellInstance =
+                    Instantiate(_shell, spawnTransform.position, spawnTransform.rotation) as Rigidbody;
 
-    public void StopFire()
-    {
-        
+            shellInstance.linearVelocity = _launchForce * spawnTransform.forward;
+
+            Collider collider = shellInstance.GetComponent<Collider>();
+            List<Collider> colliders = new List<Collider>();
+            colliders.Add(collider);
+            return colliders;
+        }
+
+        public void StopFire()
+        {
+
+        }
     }
 }
+

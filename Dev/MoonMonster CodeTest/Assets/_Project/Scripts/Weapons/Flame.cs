@@ -1,17 +1,21 @@
 using MoonMonster.Codetest;
 using UnityEngine;
 
-public class Flame : MonoBehaviour
+namespace MoonMonster.Codetest
 {
-    [SerializeField] float _damage = 1f;
-    private void OnTriggerEnter(Collider other)
+    public class Flame : MonoBehaviour
     {
-        if (!other.TryGetComponent(out Rigidbody targetRigidbody))
-            return;
+        [SerializeField] float _damage = 1f;
+        private void OnTriggerEnter(Collider other)
+        {
+            if (!other.TryGetComponent(out Rigidbody targetRigidbody))
+                return;
 
-        if (!targetRigidbody.TryGetComponent(out TankHealth targetHealth))
-            return;
+            if (!targetRigidbody.TryGetComponent(out TankHealth targetHealth))
+                return;
 
-        targetHealth.TakeDamage(_damage);
+            targetHealth.TakeDamage(_damage);
+        }
     }
 }
+

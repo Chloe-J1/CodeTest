@@ -2,26 +2,30 @@ using NaughtyAttributes;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class FlamethrowerWeapon : MonoBehaviour, IWeapon
+namespace MoonMonster.Codetest
 {
-    [SerializeField, Required] private GameObject _flame;
-
-    private GameObject _flameInstance;
-
-    public List<Collider> Fire(Transform spawnTransform)
+    public class FlamethrowerWeapon : MonoBehaviour, IWeapon
     {
-        _flameInstance =
-                Instantiate(_flame, spawnTransform); // Parent the flame on the tank
+        [SerializeField, Required] private GameObject _flame;
 
-        Collider collider = _flameInstance.GetComponent<Collider>();
-        List<Collider> colliders = new List<Collider>();
-        colliders.Add(collider);
-        return colliders;
-    }
+        private GameObject _flameInstance;
 
-    public void StopFire()
-    {
-        if (_flameInstance == null) return;
-        Destroy(_flameInstance);
+        public List<Collider> Fire(Transform spawnTransform)
+        {
+            _flameInstance =
+                    Instantiate(_flame, spawnTransform); // Parent the flame on the tank
+
+            Collider collider = _flameInstance.GetComponent<Collider>();
+            List<Collider> colliders = new List<Collider>();
+            colliders.Add(collider);
+            return colliders;
+        }
+
+        public void StopFire()
+        {
+            if (_flameInstance == null) return;
+            Destroy(_flameInstance);
+        }
     }
 }
+
