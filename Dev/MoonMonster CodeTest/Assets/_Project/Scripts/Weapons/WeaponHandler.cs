@@ -42,6 +42,11 @@ namespace MoonMonster.Codetest
             }
             _shooting.SetActiveWeaponPrefab(_weaponPrefabs[_selectedWeaponIndex]);
         }
+
+        public GameObject GetActiveWeapon()
+        {
+            return _weaponPrefabs[_selectedWeaponIndex];
+        }
     }
 }
 

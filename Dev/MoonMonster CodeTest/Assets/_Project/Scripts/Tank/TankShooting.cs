@@ -25,9 +25,17 @@ namespace MoonMonster.Codetest
         
         private void Start()
         {
+            // Set the weapon the player starts with to the first one in its inventory
+            WeaponHandler weaponHandler = GetComponent<WeaponHandler>();
+            if (weaponHandler != null)
+            {
+                _weaponPrefab = weaponHandler.GetActiveWeapon();
+            }
             _camera = Camera.main;
             _collider = gameObject.GetComponent<Collider>();
             _activeWeapon = _weaponPrefab.GetComponent<IWeapon>();
+
+            
         }
 
         private void Update()
