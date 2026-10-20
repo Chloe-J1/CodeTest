@@ -7,7 +7,6 @@ namespace MoonMonster.Codetest
     {
         [SerializeField] private float _launchForce = 30f;
         [SerializeField] private int _nrShells = 3;
-        [SerializeField] private Rigidbody _shellRigidbody;
 
         public List<Collider> Fire(Transform spawnTransform)
         {
@@ -18,13 +17,17 @@ namespace MoonMonster.Codetest
             for (int index = 0; index < _nrShells; index++)
             {
                 Quaternion rotation = spawnTransform.rotation * Quaternion.Euler(0f, rotationAngle, 0f);
-                Rigidbody shellInstance =
-                    Instantiate(_shellRigidbody, spawnTransform.position, rotation) as Rigidbody;
-
-                shellInstance.linearVelocity = _launchForce * shellInstance.transform.forward;
+                // Get the bullet from the pool and set its orientation
+                GameObject shellInstance = BulletPoolHandler.ShellsPool.Get();
+                shellInstance.transform.position = spawnTransform.position;
+                shellInstance.transform.rotation = rotation;
+                
+                // Apply the forces to the bullet
+                Rigidbody shellRigidbody = shellInstance.GetComponent<Rigidbody>();
+                shellRigidbody.linearVelocity = _launchForce * shellRigidbody.transform.forward;
                 rotationAngle += stepAngle;
 
-                Collider collider = shellInstance.GetComponent<Collider>();
+                Collider collider = shellRigidbody.GetComponent<Collider>();
                 colliders.Add(collider);
             }
 
