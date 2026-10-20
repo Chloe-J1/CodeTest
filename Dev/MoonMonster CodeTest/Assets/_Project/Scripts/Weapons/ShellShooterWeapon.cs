@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace MoonMonster.Codetest
 {
-    public class MultipleShotWeapon : MonoBehaviour, IWeapon
+    public class ShellShooterWeapon : MonoBehaviour, IWeapon
     {
         [SerializeField] private float _launchForce = 30f;
         [SerializeField] private int _nrShells = 3;
