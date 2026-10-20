@@ -6,7 +6,6 @@ using UnityEngine.Pool;
 public class BulletPoolHandler : MonoBehaviour
 {
     [SerializeField, Required] GameObject _shellPrefab;
-    private ObjectPool<GameObject> _shells;
     static public ObjectPool<GameObject> ShellsPool
     {
         get;
@@ -56,6 +55,6 @@ public class BulletPoolHandler : MonoBehaviour
     {
         yield return new WaitForSeconds(seconds);
         // Give it back to the pool.
-        _shells.Release(pooledObject);
+        ShellsPool.Release(pooledObject);
     }
 }
