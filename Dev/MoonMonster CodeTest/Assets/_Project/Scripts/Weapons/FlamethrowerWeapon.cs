@@ -5,7 +5,7 @@ using UnityEngine.Events;
 
 namespace MoonMonster.Codetest
 {
-    public class FlamethrowerWeapon : MonoBehaviour, IWeapon
+    public class FlamethrowerWeapon : Weapon
     {
         [SerializeField, Required] private GameObject _flame;
         [SerializeField] private UnityEvent _onFire;
@@ -13,7 +13,7 @@ namespace MoonMonster.Codetest
 
         private GameObject _flameInstance;
 
-        public List<Collider> Fire(Transform spawnTransform)
+        public override List<Collider> Fire(Transform spawnTransform)
         {
             if(_flameInstance == null)
             {
@@ -27,7 +27,7 @@ namespace MoonMonster.Codetest
             return colliders;
         }
 
-        public void StopFire()
+        public override void StopFire()
         {
             if (_flameInstance == null) return;
             _stopFire.Invoke();

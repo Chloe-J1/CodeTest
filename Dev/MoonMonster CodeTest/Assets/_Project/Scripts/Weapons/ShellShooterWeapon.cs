@@ -4,13 +4,13 @@ using UnityEngine.Events;
 
 namespace MoonMonster.Codetest
 {
-    public class ShellShooterWeapon : MonoBehaviour, IWeapon
+    public class ShellShooterWeapon : Weapon
     {
         [SerializeField] private float _launchForce = 30f;
         [SerializeField] private int _nrShells = 3;
         [SerializeField] private UnityEvent _onFire;
 
-        public List<Collider> Fire(Transform spawnTransform)
+        public override List<Collider> Fire(Transform spawnTransform)
         {
             List<Collider> colliders = new List<Collider>();
             float totalRotationReach = 45f;
@@ -35,10 +35,6 @@ namespace MoonMonster.Codetest
 
             _onFire.Invoke();
             return colliders;
-        }
-
-        public void StopFire()
-        {
         }
     }
 }

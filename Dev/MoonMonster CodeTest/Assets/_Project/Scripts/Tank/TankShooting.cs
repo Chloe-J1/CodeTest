@@ -17,7 +17,7 @@ namespace MoonMonster.Codetest
         private bool _fired;
         private Camera _camera;
         private Collider _collider;
-        private IWeapon _activeWeapon;
+        private Weapon _activeWeapon;
         private GameObject _weaponInstance;
 
         
@@ -32,7 +32,7 @@ namespace MoonMonster.Codetest
             _camera = Camera.main;
             _collider = gameObject.GetComponent<Collider>();
             _weaponInstance = Instantiate(_weaponPrefab, _fireTransform);
-            _activeWeapon = _weaponInstance.GetComponent<IWeapon>();
+            _activeWeapon = _weaponInstance.GetComponent<Weapon>();
         }
 
         private void Update()
@@ -116,7 +116,7 @@ namespace MoonMonster.Codetest
 
             _weaponPrefab = activeWeapon;
             _weaponInstance = Instantiate(_weaponPrefab, _fireTransform);
-            _activeWeapon = _weaponInstance.GetComponent<IWeapon>();
+            _activeWeapon = _weaponInstance.GetComponent<Weapon>();
         }
     }
 }

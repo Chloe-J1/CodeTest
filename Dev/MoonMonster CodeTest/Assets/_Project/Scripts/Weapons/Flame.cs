@@ -1,4 +1,3 @@
-using MoonMonster.Codetest;
 using UnityEngine;
 
 namespace MoonMonster.Codetest
