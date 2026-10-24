@@ -43,15 +43,15 @@ namespace MoonMonster.Codetest
                 _shooting.StopFire();
             }
 
-            if(Input.GetButton(_selectFirstWeaponButtonName))
+            if(Input.GetButtonDown(_selectFirstWeaponButtonName))
             {
                 _weaponHandler.SetSelectedWeapon(0);
             }
-            if (Input.GetButton(_selectSecondWeaponButtonName))
+            if (Input.GetButtonDown(_selectSecondWeaponButtonName))
             {
                 _weaponHandler.SetSelectedWeapon(1);
             }
-            if (Input.GetButton(_selectThirdWeaponButtonName))
+            if (Input.GetButtonDown(_selectThirdWeaponButtonName))
             {
                 _weaponHandler.SetSelectedWeapon(2);
             }

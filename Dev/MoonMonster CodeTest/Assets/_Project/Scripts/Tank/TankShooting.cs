@@ -8,9 +8,6 @@ namespace MoonMonster.Codetest
     {
         [SerializeField] private bool _lookAtMouse;
         [SerializeField, Required] private Transform _fireTransform;
-        [SerializeField, Required] private AudioSource _shootingAudio;
-        [SerializeField, Required] private AudioClip _fireClip;
-        [SerializeField] private float _launchForce = 15f;
         [SerializeField] private float _fireDelay = 0.3f;
         [SerializeField, Required] private GameObject _turret;
         [SerializeField] private float _angleOffset = 90f;
@@ -21,6 +18,7 @@ namespace MoonMonster.Codetest
         private Camera _camera;
         private Collider _collider;
         private IWeapon _activeWeapon;
+        private GameObject _weaponInstance;
 
         
         private void Start()
@@ -33,9 +31,8 @@ namespace MoonMonster.Codetest
             }
             _camera = Camera.main;
             _collider = gameObject.GetComponent<Collider>();
-            _activeWeapon = _weaponPrefab.GetComponent<IWeapon>();
-
-            
+            _weaponInstance = Instantiate(_weaponPrefab, _fireTransform);
+            _activeWeapon = _weaponInstance.GetComponent<IWeapon>();
         }
 
         private void Update()
@@ -81,9 +78,6 @@ namespace MoonMonster.Codetest
                 }
             }
             
-            _shootingAudio.clip = _fireClip;
-            _shootingAudio.Play();
-            
             _fired = true;
             _reloadCountdown = _fireDelay;
         }
@@ -114,8 +108,15 @@ namespace MoonMonster.Codetest
 
         public void SetActiveWeaponPrefab(GameObject activeWeapon)
         {
+            if (_weaponInstance != null && activeWeapon == _weaponPrefab) return;
+
+
+            _activeWeapon.StopFire();
+            Destroy(_weaponInstance);
+
             _weaponPrefab = activeWeapon;
-            _activeWeapon = _weaponPrefab.GetComponent<IWeapon>();
+            _weaponInstance = Instantiate(_weaponPrefab, _fireTransform);
+            _activeWeapon = _weaponInstance.GetComponent<IWeapon>();
         }
     }
 }

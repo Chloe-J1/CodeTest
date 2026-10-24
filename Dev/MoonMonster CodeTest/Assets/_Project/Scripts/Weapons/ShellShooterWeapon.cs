@@ -1,5 +1,7 @@
+using NaughtyAttributes;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 namespace MoonMonster.Codetest
 {
@@ -7,6 +9,7 @@ namespace MoonMonster.Codetest
     {
         [SerializeField] private float _launchForce = 30f;
         [SerializeField] private int _nrShells = 3;
+        [SerializeField] private UnityEvent _onFire;
 
         public List<Collider> Fire(Transform spawnTransform)
         {
@@ -31,6 +34,7 @@ namespace MoonMonster.Codetest
                 colliders.Add(collider);
             }
 
+            _onFire.Invoke();
             return colliders;
         }
 
