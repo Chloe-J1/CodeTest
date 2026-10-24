@@ -34,6 +34,12 @@ namespace MoonMonster.Codetest
                 _aiController.Target = Object.FindFirstObjectByType<PlayerInput>().transform;
 
             if(_playerInput)
+            {
+                WeaponHandler weaponHandler = Instance.GetComponent<WeaponHandler>();
+                Object.FindFirstObjectByType<InventoryUI>().AddListener(weaponHandler);
+            }
+
+            if(_playerInput)
                 ColoredPlayerText = "<color=#" + ColorUtility.ToHtmlStringRGB(TankColor) + ">PLAYER " + TankNumber + "</color>";
             else if(_aiController)
                 ColoredPlayerText = "<color=#" + ColorUtility.ToHtmlStringRGB(TankColor) + ">AI</color>";

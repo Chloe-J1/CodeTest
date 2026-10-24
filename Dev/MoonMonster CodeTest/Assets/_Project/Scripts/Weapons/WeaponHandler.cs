@@ -1,12 +1,14 @@
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 namespace MoonMonster.Codetest
 {
     public class WeaponHandler : MonoBehaviour
     {
-        private int _selectedWeaponIndex = 0;
         public List<GameObject> _weaponPrefabs = new List<GameObject>();
+        [SerializeField] public UnityEvent<GameObject> _activeWeaponChanged;
+        private int _selectedWeaponIndex = 0;
         private TankShooting _shooting;
 
         private void Start()
@@ -20,6 +22,7 @@ namespace MoonMonster.Codetest
                 return;
             _selectedWeaponIndex = selectedWeaponIndex;
             _shooting.SetActiveWeaponPrefab(_weaponPrefabs[_selectedWeaponIndex]);
+            _activeWeaponChanged?.Invoke(_weaponPrefabs[_selectedWeaponIndex]);
         }
         public void SelectNextWeapon()
         {
@@ -29,7 +32,7 @@ namespace MoonMonster.Codetest
                 _selectedWeaponIndex = 0; // Go back to start
             }
             _shooting.SetActiveWeaponPrefab(_weaponPrefabs[_selectedWeaponIndex]);
-
+            _activeWeaponChanged?.Invoke(_weaponPrefabs[_selectedWeaponIndex]);
         }
 
         public void SelectPreviousWeapon()
@@ -40,6 +43,7 @@ namespace MoonMonster.Codetest
                 _selectedWeaponIndex = _weaponPrefabs.Count - 1; // Jump to end
             }
             _shooting.SetActiveWeaponPrefab(_weaponPrefabs[_selectedWeaponIndex]);
+            _activeWeaponChanged?.Invoke(_weaponPrefabs[_selectedWeaponIndex]);
         }
 
         public GameObject GetActiveWeapon()
