@@ -3,6 +3,7 @@ using UnityEngine;
 
 namespace MoonMonster.Codetest
 {
+    // Base class that weapons can use to implement shooting mechanics
     public class Weapon : MonoBehaviour
     {
         virtual public List<Collider> Fire(Transform spawnTransform)
